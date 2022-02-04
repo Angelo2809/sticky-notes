@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR" ng-app = "lembretes">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lembretes</title>
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
+    <script src="lib/angular/angular.js"></script>
+    <script>
+        angular.module("lembretes", []);
+        angular.module("lembretes").controller("lembretesCtrl", function($scope){
+            $scope.message= "Lembretes!";
+            $scope.lembretes = [
+                {descricao: "Alface"},
+                {descricao: "Tomate"}
+
+            ]
+            
+        });
+
+
+    </script>
+</head>
+<style>
+body{
+    width: 600px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+
+</style>
+<body ng-controller ="lembretesCtrl">
+    <div class="jumbotron">
+        <h3>{{message}}</h3>
+        <table>
+            <tr>
+                <td>Feito</td>
+                <td class="table">Descrição</td>
+            </tr>
+            <tr ng-repeat = "lembrete in lembretes">
+                <td><input type = "checkbox"></td>
+                <td>{{lembrete.descricao}}</td>
+            </tr>
+        </table>
+</body>
+</html>

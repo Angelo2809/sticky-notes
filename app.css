@@ -1,0 +1,19 @@
+       .jumbotron{
+            width: 600px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .table{
+            margin-top: 10px;
+        }
+        .form-control{
+            margin-bottom: 10px;
+        }
+        .selecionado{
+            background-color: rgb(230, 141, 141);
+        }
+        footer{
+            text-align: center;
+            font-style: italic;
+        }

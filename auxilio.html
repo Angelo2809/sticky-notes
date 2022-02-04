@@ -1,0 +1,85 @@
+<!DOCTYPE html  >
+<html lang="pt-BR" ng-app ="listaTelefonica">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista telefônica</title>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <script src="lib/angular/angular.js"></script>
+    <script>
+        angular.module("listaTelefonica", []);
+        angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope){
+            $scope.message = "Lista Telefonica!";
+            $scope.contatos = [
+                {nome: "Angelo", telefone: "(11) 99213-8585", cor:"royalblue"},
+                {nome: "Angelo2", telefone: "(11) 99213-8586", cor: "yellow"},
+                {nome: "Angelo3", telefone: "(11) 99213-8587", cor: "red"}
+            ];
+            $scope.operadoras = [
+                {nome: "OI", codigo: 14, categoria: "Celular"},
+                {nome: "TIM", codigo: 41,  categoria: "Celular"},
+                {nome: "CLARO", codigo: 21,  categoria: "Celular"},
+                {nome: "VIVO", codigo: 15, categoria: "Celular"},
+                {nome: "NEXTEL", codigo: 99, categoria: "Celular"},
+                {nome: "GVT", codigo: 25, categoria: "Fixo"},
+                {nome: "EMBRATEL", codigo: 22, categoria: "Fixo"}
+            ];
+            $scope.adcCtt = function(contato){
+                $scope.contatos.push(angular.copy(contato));
+                delete $scope.contato;
+            }
+            $scope.apagarCtt = function(contatos){
+                //console.log(contatos);
+                $scope.contatos = contatos.filter(function(contato){
+                    if(!contato.selecionado) return contato;
+                });
+                
+            }
+            $scope.isContatosSelecionados = function(contatos){
+               return contatos.some(function(contato){
+                    return contato.selecionado;
+                });
+            };
+        });     
+
+    </script>
+
+</head>
+<body ng-controller = "listaTelefonicaCtrl">
+    <div class="jumbotron"  >
+        <h3>{{message}}</h3>
+        <table class="table" ng-show="contatos.length > 0">
+            <tr>
+                <th></th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Operadora</th>
+                <th></th>
+            </tr>
+            <tr ng-class="{selecionado: contato.selecionado}" ng-repeat="contato in contatos">
+                <td><input type="checkbox" ng-model="contato.selecionado" ></td>
+                <td>{{contato.nome}}</td>
+                <td>{{contato.telefone}}</td>
+                <td>{{contato.operadora.nome}}</td>
+                <td><div id="cores" style= "width: 20px; height: 20px;" ng-style = "{'background-color': contato.cor}"></div></td>
+            </tr>
+        </table>
+        <hr/>
+        <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome"/>
+        <input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone"/>
+        <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras" ></select>
+            <option value="">Selecione uma operadora"</option>
+        <button class="btn btn-primary btn-block" ng-click="adcCtt(contato)" ng-disabled="!contato.nome || !contato.telefone || !contato.operadora.nome"> Adicionar Contato</button>
+        <button class="btn btn-danger btn-block" ng-click= "apagarCtt(contatos)" ng-if="isContatosSelecionados(contatos)" >Apagar Contato</button>
+        Como será salvo no banco de dados: <br/>
+        {{contato}}
+    </div>
+    <footer>
+        Criado por Angelo Queiroz
+    </footer>
+    
+</body>
+</html>
